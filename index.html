@@ -31,10 +31,12 @@
             background-color: #1F2937; /* Slightly lighter card background */
             border: 1px solid #374151;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
         }
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-8px) scale(1.05);
             box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+            z-index: 10;
         }
         /* Scroll Animation Styles */
         .reveal {
@@ -46,6 +48,49 @@
         .reveal.active {
             transform: translateY(0);
             opacity: 1;
+        }
+
+        /* Circular Layout Styles */
+        .circular-layout {
+            display: none; /* Hidden by default, shown on large screens */
+        }
+
+        @media (min-width: 1024px) {
+            .circular-layout {
+                display: block;
+                --radius: 320px;
+                --item-size: 220px;
+                position: relative;
+                width: calc(var(--radius) * 2);
+                height: calc(var(--radius) * 2);
+                margin: 6rem auto 2rem;
+            }
+            .circle-item {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: var(--item-size);
+                height: auto;
+                margin: calc(var(--item-size) / -2);
+                transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            .circle-item .card:hover {
+                transform: scale(1.1); /* Simplified hover for circular items */
+            }
+            .item-1 { transform: rotate(0deg) translateY(calc(var(--radius) * -1)) rotate(0deg); }
+            .item-2 { transform: rotate(60deg) translateY(calc(var(--radius) * -1)) rotate(-60deg); }
+            .item-3 { transform: rotate(120deg) translateY(calc(var(--radius) * -1)) rotate(-120deg); }
+            .item-4 { transform: rotate(180deg) translateY(calc(var(--radius) * -1)) rotate(-180deg); }
+            .item-5 { transform: rotate(240deg) translateY(calc(var(--radius) * -1)) rotate(-240deg); }
+            .item-6 { transform: rotate(300deg) translateY(calc(var(--radius) * -1)) rotate(-300deg); }
+            .central-element {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 5;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -93,11 +138,62 @@
                     <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto reveal" style="transition-delay: 200ms;">
                         Teaching isn't a script; it's a responsive, iterative process. Each step informs the next, creating a powerful loop of learning for both students and educators.
                     </p>
+                    <br/>
+                    
+                    <br/>
                 </div>
 
-                <!-- Cycle Steps Grid -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
+                <!-- Circular Layout for Large Screens -->
+                <div class="circular-layout reveal">
+                    <div class="central-element">
+                         <div class="flex items-center justify-center h-48 w-48 rounded-full bg-gray-800/50 border-2 border-dashed border-gray-600 backdrop-blur-sm">
+                            <div class="text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400 mx-auto mb-2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg>
+                                <h4 class="text-2xl font-bold gradient-text">The Cycle</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Items will be positioned around the circle with CSS -->
+                    <div class="circle-item item-1">
+                        <div class="card p-6 rounded-xl text-center">
+                            <h4 class="text-xl font-bold mb-2">1. Hypothesis</h4>
+                            <p class="text-gray-400 text-sm">Your lesson plan. A belief that a specific activity will lead to understanding.</p>
+                        </div>
+                    </div>
+                     <div class="circle-item item-2">
+                        <div class="card p-6 rounded-xl text-center">
+                            <h4 class="text-xl font-bold mb-2">2. Experiment</h4>
+                            <p class="text-gray-400 text-sm">Running the activity. You facilitate, question, and observe student interaction.</p>
+                        </div>
+                    </div>
+                     <div class="circle-item item-3">
+                        <div class="card p-6 rounded-xl text-center">
+                            <h4 class="text-xl font-bold mb-2">3. Feedback</h4>
+                            <p class="text-gray-400 text-sm">Assessment as data. Exit tickets and discussions reveal performance.</p>
+                        </div>
+                    </div>
+                     <div class="circle-item item-4">
+                        <div class="card p-6 rounded-xl text-center">
+                            <h4 class="text-xl font-bold mb-2">4. Analysis</h4>
+                            <p class="text-gray-400 text-sm">Reviewing the data. Who succeeded? Who struggled? Why?</p>
+                        </div>
+                    </div>
+                     <div class="circle-item item-5">
+                        <div class="card p-6 rounded-xl text-center">
+                            <h4 class="text-xl font-bold mb-2">5. Iteration</h4>
+                            <p class="text-gray-400 text-sm">Refining your approach. The data informs the next, improved lesson.</p>
+                        </div>
+                    </div>
+                     <div class="circle-item item-6">
+                        <div class="card p-6 rounded-xl text-center">
+                            <h4 class="text-xl font-bold mb-2">Outcome</h4>
+                            <p class="text-gray-400 text-sm">An adaptive classroom where teaching is a reflective, data-informed craft.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid Layout for Medium and Small Screens -->
+                <div class="grid md:grid-cols-2 lg:hidden gap-8">
                     <!-- Step 1: Hypothesis -->
                     <div class="card p-8 rounded-xl reveal">
                         <div class="flex items-center justify-center bg-indigo-900/50 h-16 w-16 rounded-full mb-6 border border-indigo-700">
@@ -106,7 +202,6 @@
                         <h4 class="text-2xl font-bold mb-3">1. The Hypothesis</h4>
                         <p class="text-gray-400">This is your lesson plan—a well-reasoned belief. "I hypothesize that this hands-on activity will effectively teach the concept of photosynthesis."</p>
                     </div>
-
                     <!-- Step 2: Experiment -->
                     <div class="card p-8 rounded-xl reveal" style="transition-delay: 150ms;">
                         <div class="flex items-center justify-center bg-purple-900/50 h-16 w-16 rounded-full mb-6 border border-purple-700">
@@ -115,7 +210,6 @@
                         <h4 class="text-2xl font-bold mb-3">2. The Experiment</h4>
                         <p class="text-gray-400">You run the activity. As a facilitator, you guide, observe, and question, watching how students interact with the material and each other.</p>
                     </div>
-
                     <!-- Step 3: Feedback -->
                     <div class="card p-8 rounded-xl reveal" style="transition-delay: 300ms;">
                         <div class="flex items-center justify-center bg-sky-900/50 h-16 w-16 rounded-full mb-6 border border-sky-700">
@@ -124,7 +218,6 @@
                         <h4 class="text-2xl font-bold mb-3">3. The Feedback Loop</h4>
                         <p class="text-gray-400">Assessment is your data. Exit tickets, discussions, and assignments provide crucial feedback on the experiment's performance.</p>
                     </div>
-
                     <!-- Step 4: Analysis -->
                     <div class="card p-8 rounded-xl reveal" style="transition-delay: 450ms;">
                         <div class="flex items-center justify-center bg-emerald-900/50 h-16 w-16 rounded-full mb-6 border border-emerald-700">
@@ -133,7 +226,6 @@
                         <h4 class="text-2xl font-bold mb-3">4. The Analysis</h4>
                         <p class="text-gray-400">You analyze the data across different student groups. Who succeeded? Who struggled? Why? This reveals multiple outcomes from a single lesson.</p>
                     </div>
-                    
                     <!-- Step 5: Iteration -->
                     <div class="card p-8 rounded-xl reveal" style="transition-delay: 600ms;">
                         <div class="flex items-center justify-center bg-rose-900/50 h-16 w-16 rounded-full mb-6 border border-rose-700">
@@ -142,7 +234,6 @@
                         <h4 class="text-2xl font-bold mb-3">5. The Iteration</h4>
                         <p class="text-gray-400">The most crucial step. You refine your approach based on the data, adjusting the next lesson to be even more effective. The cycle begins anew.</p>
                     </div>
-                    
                     <!-- Step 6: The Outcome -->
                     <div class="card p-8 rounded-xl reveal" style="transition-delay: 750ms;">
                         <div class="flex items-center justify-center bg-amber-900/50 h-16 w-16 rounded-full mb-6 border border-amber-700">
@@ -151,7 +242,6 @@
                         <h4 class="text-2xl font-bold mb-3">The Outcome</h4>
                         <p class="text-gray-400">A resilient, adaptive classroom where learning is personalized and teaching is a reflective, data-informed craft. Every student benefits.</p>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -166,7 +256,6 @@
                     </p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-x-8 gap-y-12 max-w-4xl mx-auto">
-                    
                     <!-- Benefit 1 -->
                     <div class="flex items-start space-x-4 reveal">
                         <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-green-500/10 border border-green-500/30">
@@ -177,7 +266,6 @@
                             <p class="mt-1 text-gray-400">Lessons become more relevant and responsive. Students feel seen and understood when activities adapt to their needs.</p>
                         </div>
                     </div>
-
                     <!-- Benefit 2 -->
                     <div class="flex items-start space-x-4 reveal" style="transition-delay: 150ms;">
                         <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-blue-500/10 border border-blue-500/30">
@@ -188,7 +276,6 @@
                             <p class="mt-1 text-gray-400">You become a more flexible and effective educator, equipped with the data to make informed instructional decisions on the fly.</p>
                         </div>
                     </div>
-
                     <!-- Benefit 3 -->
                     <div class="flex items-start space-x-4 reveal" style="transition-delay: 300ms;">
                         <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-yellow-500/10 border border-yellow-500/30">
@@ -199,7 +286,6 @@
                             <p class="mt-1 text-gray-400">A lesson that doesn't go as planned is no longer a failure. It's a valuable data point that provides insight for the next iteration.</p>
                         </div>
                     </div>
-                    
                     <!-- Benefit 4 -->
                     <div class="flex items-start space-x-4 reveal" style="transition-delay: 450ms;">
                         <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-red-500/10 border border-red-500/30">
